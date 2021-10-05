@@ -21,7 +21,7 @@ export const ThemeSwitcher = () => {
       <div
         className={`h-5 w-full ${
           theme.otherBackground
-        } rounded-full flex items-center px-1 ${
+        } rounded-full flex items-center px-1 cursor-pointer ${
           themeIndex === 0
             ? "justify-start"
             : themeIndex === 1
