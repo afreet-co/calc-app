@@ -24,16 +24,21 @@ export const AppContextProvider: FC = ({ children }) => {
   const [secondNumber, setSecondNumber] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [operator, setOperator] = useState<Operator>();
+  const [isFinished, setIsFinished] = useState(false);
   const updateInput = (input: string) => {
+    if (isFinished && input !== "RESET") {
+      updateInput("RESET");
+    }
     switch (input) {
       case "RESET":
         setFirstNumber(0);
         setSecondNumber(0);
         setDisplayText("");
         setOperator(null);
+        setIsFinished(false);
         break;
       case "DEL":
-        if (!operator && displayText.length > 0) {
+        if (displayText.length > 0) {
           const lastChar = displayText[displayText.length - 1];
           if (isOperator(lastChar)) setOperator(null);
           else if (operator) setSecondNumber((prev) => Math.floor(prev / 10));
@@ -57,21 +62,30 @@ export const AppContextProvider: FC = ({ children }) => {
             result = firstNumber * secondNumber;
             break;
         }
-        setDisplayText(result.toString());
+        setDisplayText(result.toFixed(2));
         setFirstNumber(0);
         setSecondNumber(0);
         setOperator(null);
+        setIsFinished(true);
         break;
       case "+":
       case "-":
       case "/":
       case "x":
         if (displayText.length > 0) {
-          setOperator(input as Operator);
-          const str = isOperator(displayText[displayText.length - 1])
-            ? displayText.slice(0, displayText.length - 1) + input
-            : displayText + input;
-          setDisplayText(str);
+          if (!operator) {
+            setDisplayText((prev) => prev + input);
+            setOperator(input);
+          } else {
+            const lastCharIsOpr = isOperator(
+              displayText[displayText.length - 1]
+            );
+            if (lastCharIsOpr) {
+              const str = displayText.slice(0, displayText.length - 1) + input;
+              setDisplayText(str);
+              setOperator(input as Operator);
+            }
+          }
         }
         break;
       default:

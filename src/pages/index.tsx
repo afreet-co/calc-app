@@ -23,7 +23,7 @@ const Index = () => {
         className={`h-screen w-screen flex items-center justify-center ${theme.mainBackground}`}
       >
         <div
-          className={`flex flex-col justify-start rounded-lg space-y-4 p-4 text-lg ${theme.mainBackground} ${theme.header}`}
+          className={` w-96 flex flex-col justify-start rounded-lg space-y-4 p-4 text-lg ${theme.mainBackground} ${theme.header}`}
         >
           <div className={`w-full flex justify-between items-end `}>
             <h3 className="w-2/3 text-xl">calc</h3>
@@ -37,7 +37,7 @@ const Index = () => {
               type="text"
               readOnly
               value={displayText}
-              className={`p-4 text-2xl ${theme.screen} rounded-lg text-right focus:outline-none `}
+              className={`p-4 text-2xl ${theme.screen} rounded-lg text-right focus:outline-none w-full`}
             />
           </div>
           <KeypadPanel />
