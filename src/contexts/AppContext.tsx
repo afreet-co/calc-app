@@ -51,13 +51,16 @@ export const AppContextProvider: FC = ({ children }) => {
             result = firstNumber - secondNumber;
             break;
           case "/":
-            result = !secondNumber ? firstNumber / secondNumber : 0;
+            result = secondNumber ? firstNumber / secondNumber : 0;
             break;
           case "x":
             result = firstNumber * secondNumber;
             break;
         }
         setDisplayText(result.toString());
+        setFirstNumber(0);
+        setSecondNumber(0);
+        setOperator(null);
         break;
       case "+":
       case "-":
@@ -78,19 +81,6 @@ export const AppContextProvider: FC = ({ children }) => {
         setDisplayText((prev) => prev + input);
         break;
     }
-
-    // if (isOperator(input) && !operator && displayText.length > 1) {
-    //   setOperator(input as Operator);
-    //   const str = isOperator(displayText[displayText.length - 1])
-    //     ? displayText.slice(0, displayText.length - 2) + input
-    //     : displayText + input;
-    //   setDisplayText(str.replace(/,/g, "").replace(/.(?=(?:.{3})+$)/g, "$&,"));
-    // } else {
-    //   operator
-    //     ? setSecondNumber((prev) => prev * 10 + +input)
-    //     : setFirstNumber((prev) => prev * 10 + +input);
-    //   setDisplayText((prev) => prev + input);
-    // }
   };
   return (
     <AppContext.Provider

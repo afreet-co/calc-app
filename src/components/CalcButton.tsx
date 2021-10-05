@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-
+import { useThemeContext } from "../contexts/ThemeContext";
 type CalcButtonProps = {
   text: string;
   schema: 1 | 2 | 3;
@@ -13,12 +13,13 @@ export const CalcButton: FC<CalcButtonProps> = ({
   schema,
   onClick,
 }) => {
+  const { theme } = useThemeContext();
   const classes =
     schema === 1
-      ? "text-gray-600 bg-gray-100 border-gray-400"
+      ? theme.buttonSchema1
       : schema === 2
-      ? "text-gray-200 bg-gray-600 border-gray-700"
-      : "text-red-100 bg-red-500 border-red-700";
+      ? theme.buttonSchema2
+      : theme.buttonSchema3;
   return (
     <button
       onClick={onClick}
